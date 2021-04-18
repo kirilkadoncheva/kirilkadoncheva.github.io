@@ -1,10 +1,11 @@
 /**
  * FMI VR/AR/XR Library
- * 2020-05-09
- * v 0.002
+ * 2020-05-25
+ * v 0.005
  *
  * vaxInit()	инициализира на моно режим и поддържа
- *				анимационен цикъл с animate()
+ *				анимационен цикъл с animate() -- проверява
+ *				за наличието на Physijs
  *
  * animate()	потребителска функция, която генерира нов
  *				кадър; извиква се автоматично
@@ -14,6 +15,12 @@
  *
  * pillar(center, material) създава пилон с връх center,
  *              материал и стигащ до y=0
+ *
+ * robotMaterial - подразбиращ се материал за елемент на робот
+ *
+ * robotElement( sizeX, sizeY, sizeZ, parent ) създава елемент
+ * 				на робот, свързан към ротителски елемент
+ * 
  */
 
 var renderer, scene, camera, light, stats, clock, t, animate;
@@ -30,8 +37,11 @@ function vaxInit()
 	
 	stats = new Stats();
 	document.body.appendChild( stats.dom );
-	
-	scene = new THREE.Scene();
+
+	if( typeof Physijs !== 'undefined' )
+		scene = new Physijs.Scene();
+	else
+		scene = new THREE.Scene();
 	scene.background = new THREE.Color('white');
 
 	clock = new THREE.Clock(true);
@@ -107,6 +117,8 @@ function pillar(center, material)
 	
 	return pillar;
 }
+
+
 
 // елемент на робот
 var robotMaterial = new THREE.MeshPhongMaterial( {color: 'tomato', shininess: 100} );
