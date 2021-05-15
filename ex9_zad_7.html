@@ -49,6 +49,8 @@
             }
 
             function animate() {
+
+                var dt = t;
                 ball.position.x = THREE.Math.clamp( ball.position.x+3*changeY * dT, -20, 20 );
 				ball.position.z = THREE.Math.clamp( ball.position.z+3*changeX * dT, -45, 45 );
             }
